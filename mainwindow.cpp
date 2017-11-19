@@ -15,11 +15,6 @@ MainWindow::MainWindow(QWidget *parent) :
     mandelbrot(800, 600)
 {
     ui->setupUi(this);
-//    ui->label->setBackgroundRole(QPalette::Base);
-//    ui->label->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-//    ui->label->setScaledContents(true);
-//    ui->centralWidget->setBackgroundRole(QPalette::Dark);
-//    ui->centralWidget->setVisible(false);
     ui->label->setPixmap(QPixmap::fromImage(mandelbrot.createFractalImage()));
     ui->label->adjustSize();
     qDebug("Label: (%d,%d)", ui->label->width(),  ui->label->height());
