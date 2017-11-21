@@ -25,17 +25,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    mandelbrot.cpp
+    mandelbrot.cpp \
+    zoom.cpp
 
 HEADERS  += mainwindow.h \
-    mandelbrot.h
+    mandelbrot.h \
+    zoom.h
 
 FORMS    += mainwindow.ui
 
 RESOURCES += \
-    resource.qrc
-
-unix:!macx: LIBS += -L$$PWD/mandelbrot/lib/ -lmandelbrot
+    resources.qrc
 
 INCLUDEPATH += $$PWD/.
 DEPENDPATH += $$PWD/.

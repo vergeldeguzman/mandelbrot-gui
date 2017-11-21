@@ -5,28 +5,31 @@
 #include <QColor>
 #include <QEvent>
 #include <QKeyEvent>
-#include <QDebug>
+#include <QProgressBar>
 
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    mandelbrot(800, 600)
+    mandelbrot(this, 800, 600)
 {
     ui->setupUi(this);
     ui->label->setPixmap(QPixmap::fromImage(mandelbrot.createFractalImage()));
     ui->label->adjustSize();
-    qDebug("Label: (%d,%d)", ui->label->width(),  ui->label->height());
-    qDebug("Pixmap: (%d,%d)", ui->label->pixmap()->width(),  ui->label->pixmap()->height());
     ui->label->installEventFilter(this);
+
+    connect(&mandelbrot, SIGNAL(notifyStatusMessage(const QString)), ui->statusBar, SLOT(showMessage(const QString)));
+    connect(&mandelbrot, SIGNAL(clearStatusMessage()), ui->statusBar, SLOT(clearMessage()));
+
+    QProgressBar* progressBar = new QProgressBar(this);
+    progressBar->setRange(0, 100);
+    ui->statusBar->addPermanentWidget(progressBar);
+    connect(&mandelbrot, SIGNAL(notifyProgress(int)), progressBar, SLOT(setValue(int)));
 }
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
-    qDebug("Label: (%d,%d)", ui->label->width(),  ui->label->height());
-    qDebug("Pixmap: (%d,%d)", ui->label->pixmap()->width(),  ui->label->pixmap()->height());
-
     if (event->type() == QEvent::MouseButtonPress) {
         QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
         int x = mouseEvent->x();
