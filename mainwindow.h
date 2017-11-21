@@ -4,6 +4,7 @@
 #include "mandelbrot.h"
 
 #include <QMainWindow>
+#include <QProgressBar>
 
 #include <memory>
 
