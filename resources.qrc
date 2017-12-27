@@ -1,8 +1,9 @@
 <RCC>
-    <qresource prefix="/images">
-        <file>zoom-out.png</file>
-        <file>zoom-original.png</file>
-        <file>zoom-in.png</file>
-        <file>application-exit.png</file>
+    <qresource prefix="/root">
+        <file>images/zoom-out.png</file>
+        <file>images/zoom-original.png</file>
+        <file>images/zoom-in.png</file>
+        <file>images/application-exit.png</file>
+        <file>images/filesave.png</file>
     </qresource>
 </RCC>
