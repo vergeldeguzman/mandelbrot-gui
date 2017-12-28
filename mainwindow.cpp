@@ -6,6 +6,7 @@
 #include <QEvent>
 #include <QKeyEvent>
 #include <QProgressBar>
+#include <QFileDialog>
 
 using namespace std;
 
@@ -68,4 +69,13 @@ void MainWindow::on_actionZoom_Original_triggered()
 {
     mandelbrot.zoomOriginal();
     ui->label->setPixmap(QPixmap::fromImage(mandelbrot.createFractalImage()));
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, "Save File",
+                                "Untitled.png",
+                                "Images (*.png *.bmp *.jpg)");
+    QImage image = ui->label->pixmap()->toImage();
+    image.save(fileName);
 }
