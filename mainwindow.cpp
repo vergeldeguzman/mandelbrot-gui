@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "settingsdialog.h"
 #include "mouseeventfilter.h"
 
 #include <QColor>
@@ -78,4 +79,14 @@ void MainWindow::on_actionSave_triggered()
                                 "Images (*.png *.bmp *.jpg)");
     QImage image = ui->label->pixmap()->toImage();
     image.save(fileName);
+}
+
+void MainWindow::on_actionSettings_triggered()
+{
+    SettingsDialog* dialog = new SettingsDialog(mandelbrot.getMaxIterations(), mandelbrot.getScaleFactor(), this);
+    int dialogCode = dialog->exec();
+    if (dialogCode == QDialog::Accepted) {
+        mandelbrot.setMaxIterations(dialog->getMaxIterations());
+        mandelbrot.setScaleFactor(dialog->getScaleFactor());
+    }
 }
