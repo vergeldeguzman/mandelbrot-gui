@@ -1,10 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "mandelbrot.h"
-
 #include <QMainWindow>
 #include <QProgressBar>
+
+#include "mandelbrot.h"
 
 #include <memory>
 
@@ -30,6 +30,8 @@ private slots:
     void on_actionZoom_Original_triggered();
 
     void on_actionSave_triggered();
+
+    void on_actionSettings_triggered();
 
 private:
     Ui::MainWindow *ui;

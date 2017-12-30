@@ -41,7 +41,7 @@ int Mandelbrot::getIterations(double x, double y) {
     complex<double> c(x, y);
 
     int iterations = 0;
-    while (iterations < MAX_ITERATIONS) {
+    while (iterations < maxIterations) {
         // f(z) = z*z + c
         z = z*z + c;
         if (abs(z) > 2) {
@@ -92,7 +92,7 @@ QImage Mandelbrot::toImage(const vector<vector<int> >& fractals,
             int red = 0;
             int green = 0;
             int blue = 0;
-            if (iterations != MAX_ITERATIONS && colorIter != iterationRanges.end()) {
+            if (iterations != maxIterations && colorIter != iterationRanges.end()) {
                 int pixels = 0;
                 for (int i = colorIter->startRange; i <= iterations; ++i) {
                     pixels += histogram[i];
@@ -117,11 +117,11 @@ vector<int> Mandelbrot::createHistogram(const vector<vector<int> >& fractals) {
     emit notifyProgress(0);
 
     int dimension = width*height;
-    vector<int> histogram(MAX_ITERATIONS, 0);
+    vector<int> histogram(maxIterations, 0);
     for (int x = 0; x < width; ++x) {
         for (int y = 0; y < height; ++y) {
             int iterations = fractals[x][y];
-            if (iterations != MAX_ITERATIONS) {
+            if (iterations != maxIterations) {
                 histogram[iterations]++;
             }
             emit notifyProgress(100*(x*height + y + 1)/dimension);
@@ -132,12 +132,12 @@ vector<int> Mandelbrot::createHistogram(const vector<vector<int> >& fractals) {
 
 vector<IterationRange> Mandelbrot::createIterationRanges(const vector<int>& histogram) {
     vector<IterationRange> iterationRanges;
-    int startRange = static_cast<int>(colorRanges[0].first*MAX_ITERATIONS);
+    int startRange = static_cast<int>(colorRanges[0].first*maxIterations);
     QRgb startColor = colorRanges[0].second;
 
     for_each(colorRanges.begin() + 1, colorRanges.end(),
-        [&histogram, &startRange, &startColor, &iterationRanges](const pair<double, QRgb>& colorRange){
-            int endRange = static_cast<int>(colorRange.first*MAX_ITERATIONS);
+        [&histogram, &startRange, &startColor, &iterationRanges, this](const pair<double, QRgb>& colorRange){
+            int endRange = static_cast<int>(colorRange.first*maxIterations);
             QRgb endColor = colorRange.second;
             int iterationRange = 0;
             for (int i = startRange; i < endRange; ++i) {

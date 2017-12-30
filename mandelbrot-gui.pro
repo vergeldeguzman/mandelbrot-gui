@@ -26,13 +26,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         mainwindow.cpp \
     mandelbrot.cpp \
-    zoom.cpp
+    zoom.cpp \
+    settingsdialog.cpp
 
 HEADERS  += mainwindow.h \
     mandelbrot.h \
-    zoom.h
+    zoom.h \
+    settingsdialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    settingsdialog.ui
 
 RESOURCES += \
     resources.qrc

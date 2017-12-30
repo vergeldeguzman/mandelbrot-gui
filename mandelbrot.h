@@ -9,8 +9,6 @@
 
 #include <utility>
 
-const int MAX_ITERATIONS = 1024;
-
 struct IterationRange
 {
     int startRange;
@@ -30,6 +28,18 @@ public:
     {
         zoom.setCenter(x, y);
     }
+    int getMaxIterations() {
+        return maxIterations;
+    }
+    void setMaxIterations(int value) {
+        maxIterations = value;
+    }
+    void setScaleFactor(double value) {
+        scaleFactor = value;
+    }
+    double getScaleFactor() {
+        return scaleFactor;
+    }
     void zoomIn();
     void zoomOut();
     void zoomOriginal();
@@ -41,8 +51,10 @@ signals:
     void clearStatusMessage();
 
 private:
-    int width{0};
-    int height{0};
+    int width {0};
+    int height {0};
+    int maxIterations {1000};
+    double scaleFactor {0.5};
     Zoom zoom;
     std::vector<std::pair<double, QRgb> > colorRanges;
 
