@@ -59,13 +59,14 @@ vector<vector<int> > Mandelbrot::createFractal() {
 
     vector<vector<int> > fractals;
     fractals.reserve(width);
+    int dimension = width*height;
     for (int x = 0; x < width; x++) {
         fractals.push_back(vector<int>());
         fractals.back().reserve(height);
         for (int y = 0; y < height; y++) {
             pair<double, double> newCoords = zoom.scaleCoords(x, y);
             fractals.back().push_back(getIterations(newCoords.first, newCoords.second));
-            emit notifyProgress(100*(x*width+y)/(width*height));
+            emit notifyProgress(100*(x*height + y + 1)/dimension);
         }
     }
     return fractals;
@@ -76,6 +77,7 @@ QImage Mandelbrot::toImage(const vector<vector<int> >& fractals,
         const vector<IterationRange>& iterationRanges) {
     emit notifyProgress(0);
 
+    int dimension = width*height;
     QImage image(width, height, QImage::Format_RGB32);
     for (int x = 0; x < width; ++x) {
         for (int y = 0; y < height; ++y) {
@@ -105,7 +107,7 @@ QImage Mandelbrot::toImage(const vector<vector<int> >& fractals,
                 blue = qBlue(colorIter->startColor) + (blueDiff*pixelPerc);
             }
             image.setPixel(x, y, qRgb(red, green, blue));
-            emit notifyProgress(100*(x*width+y)/(width*height));
+            emit notifyProgress(100*(x*height + y + 1)/dimension);
         }
     }
     return image;
@@ -114,6 +116,7 @@ QImage Mandelbrot::toImage(const vector<vector<int> >& fractals,
 vector<int> Mandelbrot::createHistogram(const vector<vector<int> >& fractals) {
     emit notifyProgress(0);
 
+    int dimension = width*height;
     vector<int> histogram(MAX_ITERATIONS, 0);
     for (int x = 0; x < width; ++x) {
         for (int y = 0; y < height; ++y) {
@@ -121,7 +124,7 @@ vector<int> Mandelbrot::createHistogram(const vector<vector<int> >& fractals) {
             if (iterations != MAX_ITERATIONS) {
                 histogram[iterations]++;
             }
-            emit notifyProgress(100*(x*width+y)/(width*height));
+            emit notifyProgress(100*(x*height + y + 1)/dimension);
         }
     }
     return histogram;
